@@ -1,3 +1,6 @@
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+	
+})
 let mySprite = sprites.create(img`
     . . . . 2 2 2 2 2 . . . . . . . 
     . . . 2 2 2 2 2 2 2 2 2 . . . . 
@@ -16,3 +19,10 @@ let mySprite = sprites.create(img`
     . . e e e . . . . e e e . . . . 
     . e e e e . . . . e e e e . . . 
     `, SpriteKind.Player)
+controller.moveSprite(mySprite, 100, 100)
+tiles.setCurrentTilemap(tilemap`level1`)
+tiles.placeOnRandomTile(mySprite, assets.tile`SpawnBlock`)
+mySprite.y += -16
+game.onUpdate(function () {
+    scene.centerCameraAt(mySprite.x, mySprite.y - 30)
+})
