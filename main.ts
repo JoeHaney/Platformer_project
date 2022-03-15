@@ -1,5 +1,7 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    if (true) {
+    	
+    }
 })
 let mySprite = sprites.create(img`
     . . . . 2 2 2 2 2 . . . . . . . 
