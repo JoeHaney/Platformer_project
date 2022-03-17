@@ -1,26 +1,13 @@
-function gravity (Force: number) {
-    let inAir = 0
-    gravForce = Force
-    mySprite.y += Force
-    if (inAir) {
-        gravForce += 0.5
-    }
-}
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    Jump()
-    pause(200)
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
+    onGround = true
 })
-function Jump () {
-    for (let index = 0; index < 10; index++) {
-        mySprite.y += -10
-        pause(25)
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (onGround) {
+        onGround = false
+        mySprite.vy = -150
     }
-    for (let index = 0; index < 5; index++) {
-        mySprite.y += -2
-        pause(25)
-    }
-}
-let gravForce = 0
+})
+let onGround = false
 let mySprite: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -162,12 +149,12 @@ mySprite = sprites.create(img`
     . . e e e . . . . e e e . . . . 
     . e e e e . . . . e e e e . . . 
     `, SpriteKind.Player)
+onGround = true
 controller.moveSprite(mySprite, 100, 0)
+mySprite.ay = 300
 tiles.setCurrentTilemap(tilemap`level1`)
 tiles.placeOnRandomTile(mySprite, assets.tile`SpawnBlock`)
 mySprite.y += -16
 let groundlevel = mySprite.y
-game.onUpdate(function () {
-    scene.centerCameraAt(mySprite.x, mySprite.y - 30)
-    gravity(3)
-})
+info.startCountdown(300)
+scene.cameraFollowSprite(mySprite)
